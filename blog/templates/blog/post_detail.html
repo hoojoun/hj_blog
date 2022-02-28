@@ -8,12 +8,17 @@
 <article>
     <!-- Post header-->
     <div id="post-area">
+        {% if post.category %}
+        <span class="badge badge-secondary float-right">{{ post.category }}</span>
+        {% else %}
+        <span class="badge badge-secondary float-right">미분류</span>
+        {% endif %}
         <header class="mb-4">
             <!-- Post title-->
             <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
             <h5 class="text-muted">{{ post.hook_text }}</h5>
             <!-- Post Author-->
-            <p class="lead"> <a href="#">작성자 쓸 위치 개발 예정</a></p>
+            <p class="lead"> <a href="#">{{ post.author | upper }}</a></p>
             <hr>
             <!-- Post meta content-->
             <div class="text-muted fst-italic mb-2">{{ post.created_at }}</div>
@@ -31,6 +36,14 @@
         <!-- Post content-->
         <section class="mb-5">
             <p>{{ post.content }}</p>
+            {% if post.tags.exists %}
+            <i class="fas fa-tags"></i>
+            {% for tag in post.tags.iterator %}
+                <a href="{{ tag.get_absolute_url }}"><span class="badge badge-pill badge-light">{{ tag }}</span></a>
+            {% endfor %}
+            <br/>
+            <br/>
+        {% endif %}
             {% if post.file_upload %}
             <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark btn active" role="button" download
                 aria-pressed="true">Download : {{ post.get_file_name }}</a>
