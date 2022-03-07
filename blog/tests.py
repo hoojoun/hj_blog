@@ -11,6 +11,8 @@ class TestView(TestCase):
         self.client=Client()  # 가상의 클라이언트 생성
         self.user_trump=User.objects.create_user(username='trump', password='somepassword')
         self.user_obama=User.objects.create_user(username='obama', password='somepassword')
+        self.user_obama.is_staff=True
+        self.user_obama.save()
         self.category_programming=Category.objects.create(name='programming', slug='programming')
         self.category_music=Category.objects.create(name='music', slug='music')
 
@@ -168,7 +170,6 @@ class TestView(TestCase):
 
         soup=BeautifulSoup(response.content, 'html.parser')
         self.navbar_test(soup)
-        self.category_card_test(soup)
 
         self.assertIn(self.tag_python.name, soup.h1.text)
     
@@ -176,4 +177,77 @@ class TestView(TestCase):
         self.assertIn(self.tag_python.name, main_area.text)
         self.assertIn(self.post_001.title, main_area.text)
         self.assertNotIn(self.post_003.title, main_area.text)
+
+    def test_create_post(self):
+        # 로그인을 안한 경우
+        response=self.client.get('/blog/create_post/')
+        self.assertNotEqual(response.status_code,200)
+
+        #일반 사용자가 로그인을 한 경우
+        self.client.login(username='trump',password='somepassword')
+        response=self.client.get('/blog/create_post/')
+        self.assertNotEqual(response.status_code,200)
+
+        #관리자가 로그인을 한 경우
+        self.client.login(username='obama',password='somepassword')
+        response=self.client.get('/blog/create_post/')
+        self.assertEqual(response.status_code,200)
+
+        soup=BeautifulSoup(response.content, 'html.parser')
+        
+        self.assertEqual('Create Post - Blog', soup.title.text)
+        main_area=soup.find('div', id='main-area')
+        self.assertIn('Create New Post', main_area.text)
+
+        self.client.post('/blog/create_post/',
+            {
+                'title':'Post form 만들기',
+                'content':"post form 페이지를 만들다. ",
+            }
+        )
+        self.assertEqual(Post.objects.count(), 4)
+        last_post=Post.objects.last()
+        self.assertEqual(last_post.title, 'Post form 만들기')
+        self.assertEqual(last_post.author.username, 'obama')
+
+    def test_update_post(self):
+        update_post_url=f'/blog/update_post/{self.post_003.pk}/'
+
+        #로그인을 하지 않는 경우
+        response=self.client.get(update_post_url)
+        self.assertNotEqual(response.status_code,200)
+
+        #로그인을 했지만 작성자가 아닌 경우
+        self.assertNotEqual(self.post_003.author,self.user_trump)
+        self.client.login(username='trump',password='somepassword')
+        response=self.client.get(update_post_url)
+        self.assertEqual(response.status_code,403)
+
+        # 작성자인 경우
+        self.client.login(username=self.post_003.author,password='somepassword')
+        response=self.client.get(update_post_url)
+        self.assertEqual(response.status_code,200)
+        soup=BeautifulSoup(response.content, 'html.parser')
+
+        self.assertEqual('Edit Post - Blog', soup.title.text)
+        main_area=soup.find('div', id='main-area')
+        self.assertIn('Edit Post', main_area.text)
+
+        response=self.client.post(
+            update_post_url,
+            {
+                'title':'세번째 포스트 수정',
+                'content':"수정됨 ",
+                'category':self.category_music.pk
+            },
+            follow=True
+        )
+
+        soup=BeautifulSoup(response.content, 'html.parser')
+        main_area=soup.find('div', id='main-area')
+        self.assertIn('세번째 포스트 수정', main_area.text)
+        self.assertIn('수정됨', main_area.text)
+        self.assertIn(self.category_music.name, main_area.text)
+
+
 
