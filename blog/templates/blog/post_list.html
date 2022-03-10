@@ -35,7 +35,7 @@
             <br/>
             <br/>
         {% endif %}
-        <p class="card-text">{{p.content | truncatewords:45}}</p>
+        <p class="card-text">{{p.get_content_markdown | truncatewords_html:45 | safe }}</p>
         <a class="btn btn-primary" href="{{ p.get_absolute_url }}">Read more →</a>
     </div>
     <div class="card-footer text-muted">

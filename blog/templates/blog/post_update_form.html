@@ -5,11 +5,16 @@
 {% block main_area %}
 
 <h1>Edit Post</h1>
-<hr/>
+<hr />
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>
-        {{ form }}
-    </table>
+    {{ form | crispy }}
+    <div id="id_tags_str">
+        <label for="id_tags_str">Tags:</label>
+        <input type="text" name="tags_str" id="id_tags_str" class="textinput textInput form-control"
+            value="{{ tags_str_default }}">
+    </div>
+    <br />
     <button type="submit" class="btn btn-primary float-right">Submit</button>
-    </form>
+</form>
+{{ form.media }}
 {% endblock %}

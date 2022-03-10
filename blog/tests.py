@@ -199,16 +199,25 @@ class TestView(TestCase):
         main_area=soup.find('div', id='main-area')
         self.assertIn('Create New Post', main_area.text)
 
+        tag_str_input=main_area.find('input', id='id_tags_str')
+        self.assertTrue(tag_str_input)
+
         self.client.post('/blog/create_post/',
             {
                 'title':'Post form 만들기',
                 'content':"post form 페이지를 만들다. ",
+                'tags_str':'new tag; 한글 태그, python'
             }
         )
         self.assertEqual(Post.objects.count(), 4)
         last_post=Post.objects.last()
         self.assertEqual(last_post.title, 'Post form 만들기')
         self.assertEqual(last_post.author.username, 'obama')
+
+        self.assertEqual(last_post.tags.count(), 3)
+        self.assertTrue(Tag.objects.get(name='new tag'))
+        self.assertTrue(Tag.objects.get(name='한글 태그'))
+        self.assertEqual(Tag.objects.count(),4)
 
     def test_update_post(self):
         update_post_url=f'/blog/update_post/{self.post_003.pk}/'
@@ -233,12 +242,17 @@ class TestView(TestCase):
         main_area=soup.find('div', id='main-area')
         self.assertIn('Edit Post', main_area.text)
 
+        tag_str_input=main_area.find('input', id='id_tags_str')
+        self.assertTrue(tag_str_input)
+        self.assertIn('파이썬 공부', tag_str_input.attrs['value'])
+
         response=self.client.post(
             update_post_url,
             {
                 'title':'세번째 포스트 수정',
                 'content':"수정됨 ",
-                'category':self.category_music.pk
+                'category':self.category_music.pk,
+                'tags_str':'파이썬 공부; 한글 태그, some tag',
             },
             follow=True
         )
@@ -249,5 +263,8 @@ class TestView(TestCase):
         self.assertIn('수정됨', main_area.text)
         self.assertIn(self.category_music.name, main_area.text)
 
+        self.assertIn('파이썬 공부', main_area.text)
+        self.assertIn('한글 태그', main_area.text)
+        self.assertIn('some tag', main_area.text)
 
 
