@@ -6,8 +6,10 @@
         <a class="btn btn-info btn-sm float-right" href="/blog/create_post/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;NewPost</a>
     {% endif %}
 {% endif %}
-<h1>blog{% if category %}<span class="badge badge-secondary">{{ category }}</span>{% endif %}
-{% if tag %}<span class="badge badge-light"><i class="fas fa-tags"></i>{{ tag }}({{ tag.post_set.count }})</span>{% endif %}
+<h1>blog
+    {% if search_info %}<small class="text-muted">{{ search_info }}</small>{% endif %}
+    {% if category %}<span class="badge badge-secondary">{{ category }}</span>{% endif %}
+    {% if tag %}<span class="badge badge-light"><i class="fas fa-tags"></i>{{ tag }}({{ tag.post_set.count }})</span>{% endif %}
 </h1>
 {% if post_list.exists %}
 {% for p in post_list %}
@@ -47,17 +49,31 @@
 {% else %}
 <h3>아직 게시물이 없습니다.</h3>
 {% endif %}
+{% if is_paginated %}
 <!-- Pagination-->
 <nav aria-label="Pagination">
     <hr class="my-0" />
     <ul class="pagination justify-content-center my-4">
-        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-        <li class="page-item"><a class="page-link" href="#!">2</a></li>
-        <li class="page-item"><a class="page-link" href="#!">3</a></li>
-        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-        <li class="page-item"><a class="page-link" href="#!">15</a></li>
-        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">&larr; Older </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">&larr; Older</a>
+        </li>
+        {% endif %}
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Newer &rarr;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">Newer &rarr;</a>
+        </li>
+        {% endif %}
     </ul>
 </nav>
+{% endif %}
 {% endblock %}
