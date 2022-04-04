@@ -1,19 +1,120 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
-    <title>인비입니다</title>
+    <title>인비</title>
+    <link href="{% static 'blog/bootstrap/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/about_me.css' %}" rel="stylesheet" media="screen">
+    <script src="https://kit.fontawesome.com/01fb414d2f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <nav>
-        <a href="/blog/">Blog</a>
-        <a href="/about_me/">about me</a>
-    </nav>
-    <h1>안녕하세요 인비입니다.</h1>
-    <h2>이력</h2>
-    <h2>포트폴리오</h2>
-    <h3>공사중</h3>
+    {% include 'blog/navbar.html' %}
+    <section>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1>안녕하세요 인비입니다.</h1>
+                    <br/>
+                    <p class="lead">
+                        운동 음악
+                    </p>
+                    <ul></ul>
+
+
+                </div>
+                <div class="col-lg-4">
+                    <img class="img-fluid" src="{% static 'images/bg3.jpg' %}">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light" margin-for-footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>portfolio</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card" data-toggle="modal" data-target="#bg3">
+                        <img class="card-img-top" src="{% static 'images/bg3.jpg' %}">
+                        <div class="card-body">
+                            <h5 class="card-title">자동화</h5>
+                            <p>체온 측정 자동화</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card" data-toggle="modal" data-target="#bg3">
+                        <img class="card-img-top" src="{% static 'images/bg3.jpg' %}">
+                        <div class="card-body">
+                            <h5 class="card-title">자동화</h5>
+                            <p>체온 측정 자동화</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card" data-toggle="modal" data-target="#bg3">
+                        <img class="card-img-top" src="{% static 'images/bg3.jpg' %}">
+                        <div class="card-body">
+                            <h5 class="card-title">자동화</h5>
+                            <p>체온 측정 자동화</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="fixed-bottom">
+        {% include 'blog/footer.html' %}
+    </div>
+    <!--modal-->>
+    <div class="modal fade" id="bg3" tabindex="-1" role="dialog" aria-labelledby="automationPythonModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id=" automationPythonModalLabel">직장인을 위한 프로그래밍 입문과 업무자동화 활용</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <img class="img-fluid" src="{% static 'images/bg3.jpg' %}">
+                        </div>
+                        <div class="col-lg-5">
+                            <p>코딩에 대해 아무것도 모르는 직장인들도 쉽게 프로그래밍의 기본 개념과 문법을 실습을 통해 배우고, 파일 입출력, 엑셀 데이터 처리, MS-word 문서 자동으로 만들기, 그래프 그리기, 웹스크래핑 등을 배웁니다.</p>
+                            <button type="button" class="btn btn-light"><i class="fas fa-chalkboard-teacher"></i> 인프런</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+        integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
