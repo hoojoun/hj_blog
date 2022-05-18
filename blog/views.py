@@ -78,7 +78,7 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
             return response
         else:
             form.instance.author = current_user
-            return redirect('/blog/')
+            return redirect('/posts/')
 
 
 class PostDetail(DetailView):
@@ -145,14 +145,14 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 
 def category_page(request, slug):
     if slug == 'no_category':
-        category = '미분류'
+        category = '기타'
         Post_list = Post.objects.filter(category=None)
     else:
         category = Category.objects.get(slug=slug)
         Post_list = Post.objects.filter(category=category)
 
     return render(
-        request, 'blog/post_list.html',
+        request, 'posts/post_list.html',
         {
             'post_list': Post_list,
             'categories': Category.objects.all(),
@@ -167,7 +167,7 @@ def tag_page(request, slug):
     Post_list = tag.post_set.all()
 
     return render(
-        request, 'blog/post_list.html',
+        request, 'posts/post_list.html',
         {
             'post_list': Post_list,
             'tag': tag,

@@ -13,7 +13,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/blog/category/{self.slug}/'
+        return f'/posts/category/{self.slug}/'
 
     class Meta:
         verbose_name_plural='Categories'
@@ -26,7 +26,7 @@ class Tag(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/blog/tag/{self.slug}/'
+        return f'/posts/tag/{self.slug}/'
     
 
 class Post(models.Model):
@@ -34,8 +34,8 @@ class Post(models.Model):
     hook_text=models.CharField(max_length=100, blank=True)
     content=MarkdownxField()
 
-    head_image=models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
-    file_upload=models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
+    head_image=models.ImageField(upload_to='posts/images/%Y/%m/%d/', blank=True)
+    file_upload=models.FileField(upload_to='posts/files/%Y/%m/%d/', blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
@@ -47,7 +47,7 @@ class Post(models.Model):
         return f'[{self.pk}]{self.title} :: {self.author}'
 
     def get_absolute_url(self):
-        return f'/blog/{self.pk}'
+        return f'/posts/{self.pk}'
 
     def get_file_name(self):
         return os.path.basename(self.file_upload.name)

@@ -3,7 +3,7 @@
 <html lang="ko">
 
 <head>
-    <title>{% block head_title %}Blog{% endblock %}</title>
+    <title>{% block head_title %}posts{% endblock %}</title>
     <link href="{% static 'blog/bootstrap/bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <script src="https://kit.fontawesome.com/01fb414d2f.js" crossorigin="anonymous"></script>
 </head>
@@ -12,7 +12,7 @@
     {% include 'blog/navbar.html' %}
     <div class="container my-3">
         <div class="row">
-            <div class="col-md-4 col-lg-9" id="main-area">\
+            <div class="col-md-4 col-lg-9" id="main-area">
                 <!-- ------------------------------------ -->
                 {% block main_area %}
                 {% endblock %}
@@ -26,7 +26,7 @@
                         <div class="input-group">
                             <input class="form-control" type="text" placeholder="Enter search term..." id="search-input"
                                 aria-label="Enter search term..." aria-describedby="button-search" />
-                            <button class="btn btn-primary" id="button-search" type="button" onclick="searchPost()">Go!</button>
+                            <button class="btn btn-dark" id="button-search" type="button" onclick="searchPost()">→</button>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                                 {% for category in categories %}
                                 <li><a href="{{ category.get_absolute_url}}">{{ category }} ({{ category.post_set.count }})</a></li>
                                 {% endfor %}
-                                <li><a href="/blog/category/no_category">미분류 ({{ no_category_post_count }}) </a></li>
+                                <li><a href="/posts/category/no_category">기타 ({{ no_category_post_count }}) </a></li>
                             </ul>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
         function searchPost(){
             let searchValue=document.getElementById('search-input').value.trim();
             if(searchValue.length>1){
-                location.href="/blog/search/"+searchValue+"/";
+                location.href="/posts/search/"+searchValue+"/";
             }
             else{
                 alert('검색어('+searchValue+')가 너무 짧습니다.');
@@ -65,7 +65,7 @@
         });
     </script>
     <!-- Footer-->
-    {% include 'blog/footer.html' %}
+    <!-- {% include 'blog/footer.html' %} -->
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

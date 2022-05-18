@@ -1,6 +1,6 @@
 {% extends 'blog/base_full_width.html' %}
 {% load crispy_forms_tags %}
-{% block head_title %}Create Post - Blog{% endblock %}
+{% block head_title %}Create Post - Posts{% endblock %}
 
 {% block main_area %}
 
@@ -14,7 +14,7 @@
             <input type="text" name="tags_str" id="id_tags_str" class="textinput textInput form-control">
         </div>
         <br/>
-        <button type="submit" class="btn btn-primary float-right">Submit</button>
+        <button type="submit" class="btn btn-dark float-right">Submit</button>
     </form>
     {{ form.media }}
 {% endblock %}
