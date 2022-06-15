@@ -4,32 +4,32 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>대문</title>
+    <title>wellcome to entergrmming!</title>
     <link href="{% static 'blog/bootstrap/bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/landing.css' %}" rel="stylesheet" media="screen">
     <script src="https://kit.fontawesome.com/01fb414d2f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/clock.css' %}">
+    <script src="{% static 'js/clock.js' %}"></script>
 </head>
 
 <body>
 
     {% include 'blog/navbar.html' %}
     <section>
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-lg-6 text-light">
-                    <h1 class="mt-5">Blog</h1>
-                    <p>안녕하세요 인비입니다.</p>
+        <div class="container" style="margin-top:4%;">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-7 text-center" style="margin-top:7%;">
+                    <div id="time" class="time"></div>
+                    <div id="date" class="date"></div>
+                    <p>&nbsp;</p>
                 </div>
-                <div class="col-lg-5 mt-5">
-                    <h2 class="text-light">Blog-Recent posts</h2>
+                <div class="col-lg-4 mt-5">
+                    <h2 class="text-light">Recent posts</h2>
                     {% for post in recent_posts %}
                     <div class="card mt-1">
                         <div class="card-body">
                             <h6><a href="{{ post.get_absolute_url }}" class="text-decoration-none text-dark">{{ post.title }}</a></h6>
-                            <span class="badge badge-pill badge-light float-right">
-                                {{ post.author.username }}
-                                &nbsp;
-                                &nbsp;
+                            <span class="badge badge-pill float-right">
                                 {{ post.created_at}}
                             </span>
                         </div>
