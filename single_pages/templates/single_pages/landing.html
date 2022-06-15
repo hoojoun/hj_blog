@@ -8,8 +8,20 @@
     <link href="{% static 'blog/bootstrap/bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/landing.css' %}" rel="stylesheet" media="screen">
     <script src="https://kit.fontawesome.com/01fb414d2f.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'css/clock.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/clock.css' %}"> -->
     <!-- <script src="{% static 'js/clock.js' %}"></script> -->
+    <style>
+       .date{
+            font-size:  45px;/* 원하는 폰트 사이즈 */
+            color: rgb(255,255,255);/* 날짜가 표기되는 텍스트 색상 */
+        }
+        .time{
+            font-size:  130px;/* 원하는 폰트 사이즈 */
+            font-weight: bold;
+            color: rgb(255,255,255); /* 시간이 표기되는 텍스트 색상 */
+} 
+    </style>
+
     <script>
     function setClock(){
         var dateInfo = new Date(); 
