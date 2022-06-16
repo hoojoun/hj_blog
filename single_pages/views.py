@@ -18,3 +18,6 @@ def about_me(request):
 
 def pdf(request):
     return render(request, 'single_pages/pdf.html' )
+
+def music(request):
+    return render(request, 'single_pages/music.html' )
